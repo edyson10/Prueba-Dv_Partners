@@ -1,0 +1,42 @@
+<button type="button" class="button is-light mb-4" (click)="goBack()">
+  <span class="icon"><i class="fa-solid fa-arrow-left"></i></span>
+  <span>Volver</span>
+</button>
+
+<div class="card" *ngIf="!loading && user as u">
+    <div class="card-content">
+        <div class="media">
+            <div class="media-left">
+                <figure class="image is-128x128">
+                    <img [src]="u.avatar_url" class="avatar" alt="avatar">
+                </figure>
+            </div>
+            <div class="media-content">
+                <p class="title is-4">{{ u.name || ('@' + u.login) }}</p>
+                <p class="subtitle is-6">@{{ u.login }} · ID {{ u.id }}</p>
+                <p *ngIf="u.bio" class="mb-2">{{ u.bio }}</p>
+                <p class="mb-2">
+                    <i class="fa-solid fa-location-dot"></i> {{ u.location || '—' }}
+                    &nbsp;·&nbsp;
+                    <i class="fa-solid fa-link"></i> <a *ngIf="u.blog" [href]="u.blog" target="_blank" rel="noopener">{{
+                        u.blog }}</a><span *ngIf="!u.blog">—</span>
+                </p>
+                <p>
+                    <span class="tag is-info">Followers: {{ u.followers }}</span>
+                    <span class="tag is-success">Following: {{ u.following }}</span>
+                    <span class="tag is-dark">Repos: {{ u.public_repos }}</span>
+                </p>
+                <p class="mt-2">
+                    <a [href]="u.html_url" target="_blank" class="button is-primary">
+                        <span class="icon"><i class="fa-brands fa-github"></i></span>
+                        <span>Ver en GitHub</span>
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="notification is-info" *ngIf="loading">
+    Cargando perfil…
+</div>

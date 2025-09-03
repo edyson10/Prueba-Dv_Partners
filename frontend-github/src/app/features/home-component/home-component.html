@@ -1,0 +1,60 @@
+<div class="card">
+    <div class="card-content">
+        <div class="field has-addons">
+            <div class="control is-expanded">
+                <input class="input" [class.is-danger]="q.invalid && (q.dirty || q.touched)" type="text"
+                    placeholder="Escribe un usuario o 'doublevpartners'" [formControl]="q">
+            </div>
+            <div class="control">
+                <button class="button is-primary" (click)="searchObservable()" [disabled]="loading()">
+                    <span class="icon"><i class="fa-solid fa-search"></i></span>
+                    <span>Buscar</span>
+                </button>
+            </div>
+            <div class="control">
+                <button class="button is-info" (click)="searchPromise()" [disabled]="loading()"
+                    title="Demostración con Promise">
+                    <span class="icon"><i class="fa-solid fa-bolt"></i></span>
+                    <span>Promise</span>
+                </button>
+            </div>
+        </div>
+
+        <p class="has-text-grey">Resultados totales: {{ total() }}</p>
+    </div>
+</div>
+
+<div *ngIf="results().length" class="columns mt-4">
+    <div class="column is-half">
+        <div class="card" *ngFor="let u of results()">
+            <div class="card-content">
+                <div class="media">
+                    <div class="media-left">
+                        <figure class="image is-64x64">
+                            <img [src]="u.avatar_url" alt="Avatar" class="avatar">
+                        </figure>
+                    </div>
+                    <div class="media-content">
+                        <p class="title is-6">
+                            <a [routerLink]="['/user', u.login]" class="clickable">@{{ u.login }}</a>
+                        </p>
+                        <p class="subtitle is-7">ID: {{ u.id }} · Score: {{ u.score | number:'1.1-1' }}</p>
+                        <a [href]="u.html_url" target="_blank" rel="noopener">Ver en GitHub <i
+                                class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="column is-half">
+        <div class="card" style="height: 480px;">
+            <header class="card-header">
+                <p class="card-header-title">Seguidores (Top 10)</p>
+            </header>
+            <div class="card-content" style="height: 420px;">
+                <canvas id="followersChart" style="width: 100%; height: 100%;"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
