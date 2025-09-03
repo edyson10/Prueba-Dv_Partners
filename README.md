@@ -46,7 +46,6 @@ Asegúrate de tener instalados:
    ```bash
    http://localhost:8080
 
-
 ## 🚀 Ejecución del Frontend
 
 1. Ir al directorio del frontend:
@@ -65,7 +64,6 @@ Asegúrate de tener instalados:
    ```bash
    http://localhost:4200
 
-
 ## 🚀 Ejecución con Docker
 
 1. Construir la imagen del backend:
@@ -79,7 +77,6 @@ Asegúrate de tener instalados:
 3. (Opcional) Usar Docker Compose para backend + base de datos:
    ```bash
    docker-compose up --build
-
 
 ## 🚀 Swagger – Documentación de la API
 
