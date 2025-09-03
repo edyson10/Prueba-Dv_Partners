@@ -1,14 +1,16 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router} from '@angular/router';
 import { GitHubUserDetail } from '../../core/models/github.models';
 import { ErrorService } from '../../core/service/error-service';
 import { GithubService } from '../../core/service/github-service';
-import { NgIf, Location } from '@angular/common';
+import { Location } from '@angular/common';
+
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-user-detail-component',
-  imports: [CommonModule, NgIf, RouterLink],
+  imports: [CommonModule],
   templateUrl: './user-detail-component.html',
   styleUrl: './user-detail-component.css',
 })
@@ -31,6 +33,11 @@ export class UserDetailComponent {
       },
       error: () => {
         this.err.show('No se pudo cargar el perfil.');
+        Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'No se pudo cargar el perfil.',
+      }),
         this.loading = false;
       },
     });

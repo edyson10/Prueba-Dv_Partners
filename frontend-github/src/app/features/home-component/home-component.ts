@@ -5,16 +5,17 @@ import {
   FormControl,
   AbstractControl,
   ValidationErrors,
-  ValidatorFn
+  ValidatorFn,
 } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { GitHubSearchItem, GitHubUserDetail } from '../../core/models/github.models';
 import { ErrorService } from '../../core/service/error-service';
 import { GithubService } from '../../core/service/github-service';
 
-// 👇 Import de Chart: tipos desde 'chart.js' y registro automático desde 'chart.js/auto'
 import 'chart.js/auto';
 import { Chart, ChartConfiguration } from 'chart.js';
+
+import Swal from 'sweetalert2';
 
 function specialWordValidator(): ValidatorFn {
   return (control: AbstractControl<string | null>): ValidationErrors | null => {
@@ -29,12 +30,11 @@ function specialWordValidator(): ValidatorFn {
 
 @Component({
   selector: 'app-home-component',
-  imports: [CommonModule, ReactiveFormsModule, NgIf, NgFor, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './home-component.html',
-  styleUrl: './home-component.css'
+  styleUrl: './home-component.css',
 })
 export class HomeComponent {
-
   q = new FormControl<string>('', {
     nonNullable: true,
     validators: [specialWordValidator()],
@@ -56,7 +56,11 @@ export class HomeComponent {
       this.results.set(res.items.slice(0, 10));
       this.renderChartFromResults();
     } catch {
-      this.err.show('Error buscando usuarios.');
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Error buscando usuarios.',
+      });
     } finally {
       this.loading.set(false);
     }
@@ -64,7 +68,11 @@ export class HomeComponent {
 
   searchObservable() {
     if (this.q.invalid) {
-      this.err.show('La búsqueda debe tener mínimo 4 caracteres o ser "doublevpartners".');
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'La búsqueda debe tener mínimo 4 caracteres o ser "doublevpartners".',
+      });
       this.results.set([]);
       this.total.set(0);
       this.destroyChart();
@@ -78,22 +86,35 @@ export class HomeComponent {
         this.results.set(top10);
         this.renderChartFromResults();
       },
-      error: () => this.err.show('Error buscando usuarios.'),
+      error: () => 
+        Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Error buscando usuarios.',
+      }),
       complete: () => this.loading.set(false),
     });
   }
 
   private renderChartFromResults() {
     const items = this.results();
-    if (!items.length) { this.destroyChart(); return; }
+    if (!items.length) {
+      this.destroyChart();
+      return;
+    }
 
     this.api.getTopUsersDetailsForChart(items, 10).subscribe({
       next: (details: GitHubUserDetail[]) => {
-        const labels = details.map(d => d.login);
-        const data = details.map(d => d.followers);
+        const labels = details.map((d) => d.login);
+        const data = details.map((d) => d.followers);
         this.drawBarChart(labels, data);
       },
-      error: () => this.err.show('No se pudo construir el gráfico.'),
+      error: () =>
+        Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'No se pudo construir el gráfico.',
+      }),
     });
   }
 
@@ -115,6 +136,9 @@ export class HomeComponent {
   }
 
   private destroyChart() {
-    if (this.chart) { this.chart.destroy(); this.chart = undefined; }
+    if (this.chart) {
+      this.chart.destroy();
+      this.chart = undefined;
+    }
   }
 }
