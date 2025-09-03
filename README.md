@@ -1,59 +1,114 @@
-# FrontendGithub
+# 🎟️ Backend Tickets – Fullstack App
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.2.1.
+Proyecto de gestión de **tickets** desarrollado con **Spring Boot 3 + GraphQL + Swagger/OpenAPI**, acompañado de un **frontend Angular** y con soporte para **Docker**.
 
-## Development server
+---
 
-To start a local development server, run:
+## 📑 Tabla de Contenidos
+1. [Requisitos](#-requisitos)
+2. [Ejecución del Backend](#-ejecución-del-backend)
+3. [Ejecución del Frontend](#-ejecución-del-frontend)
+4. [Ejecución con Docker](#-ejecución-con-docker)
+5. [Swagger – Documentación de la API](#-swagger--documentación-de-la-api)
+6. [Colección de Postman](#-colección-de-postman)
+7. [GraphQL Playground](#-graphql-playground)
+8. [Autor](#-autor)
 
-```bash
-ng serve
-```
+---
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## ✅ Requisitos
 
-## Code scaffolding
+Asegúrate de tener instalados:
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+- ☕ **Java 17+**
+- 🐘 **Maven 3.9+**
+- 🐳 **Docker + Docker Compose**
+- 🌐 **Node.js 18+** y **Angular CLI**
 
-```bash
-ng generate component component-name
-```
+---
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## 🚀 Ejecución del Backend
 
-```bash
-ng generate --help
-```
+1. Clonar el repositorio:
+   ```bash
+   git clone https://github.com/tu-usuario/backend_tickets.git
+   cd backend_tickets
 
-## Building
+2. Clonar el repositorio:
+   ```bash
+   mvn clean package -DskipTests
 
-To build the project run:
+3. Ejecutar el JAR:
+   ```bash
+   java -jar target/backend_tickets-0.0.1-SNAPSHOT.jar
 
-```bash
-ng build
-```
+4. El backend estará disponible en:
+   ```bash
+   http://localhost:8080
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
 
-## Running unit tests
+## 🚀 Ejecución del Frontend
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+1. Ir al directorio del frontend:
+   ```bash
+   cd frontend_tickets
 
-```bash
-ng test
-```
+2. Instalar dependencias:
+   ```bash
+   npm install
 
-## Running end-to-end tests
+3. Ejecutar en modo desarrollo:
+   ```bash
+   ng serve
 
-For end-to-end (e2e) testing, run:
+4. El frontend quedará disponible en:
+   ```bash
+   http://localhost:4200
 
-```bash
-ng e2e
-```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## 🚀 Ejecución con Docker
 
-## Additional Resources
+1. Construir la imagen del backend:
+   ```bash
+   docker build -t backend-tickets .
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+2. Levantar el contenedor:
+   ```bash
+   docker run -p 8080:8080 backend-tickets
+
+3. (Opcional) Usar Docker Compose para backend + base de datos:
+   ```bash
+   docker-compose up --build
+
+
+## 🚀 Swagger – Documentación de la API
+
+Una vez levantado el backend, accede a la documentación interactiva en:
+
+[Swagger](http://localhost:8080/swagger-ui.html)
+
+
+## 🚀 Colección de Postman
+
+1. Abre Postman.
+
+2. Clic en Import → Upload Files.
+
+3. Selecciona el archivo:
+    ```bash
+   docs/postman/BackendTickets.postman_collection.json
+
+4. Ejecuta las requests preconfiguradas.
+
+
+## 🚀 GraphQL Playground
+
+1. El backend también expone GraphQL en:
+
+    ```bash
+    POST http://localhost:8080/graphql
+
+## 🚀 Autor
+
+# Edyson Fabian Leal Marin
+Ingeniero de Sistemas – Desarrollador Fullstack 🚀
